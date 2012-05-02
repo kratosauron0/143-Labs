@@ -11,7 +11,7 @@
 ?>
 
 <b>Choose Actor:</b><br/>
-<select>
+<select name="aid">
 <?php
 	if($connection) {
 		$query = "SELECT id, first, last FROM Actor
@@ -32,5 +32,9 @@
 	}
 ?>
 </select><br/>
+
+<?php
+	mysql_close($connection);
+?>
 </body>
 </html>

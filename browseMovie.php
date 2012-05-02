@@ -11,7 +11,8 @@
 ?>
 
 <b>Choose Movie:</b><br/>
-<select>
+<form method="GET">
+<select name="mid">
 <?php
 	if($connection) {
 		$query = "SELECT id, title FROM Movie
@@ -31,5 +32,19 @@
 	}
 ?>
 </select><br/>
+<input type="submit" value="Go">
+</form>
+
+<?php
+	if($Sconnection){
+		$query = "SELECT * FROM Movie
+					ORDER BY title";
+		
+		
+		$result = mysql_query($query, $connection);
+	}
+
+	mysql_close($connection);
+?>
 </body>
 </html>
