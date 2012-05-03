@@ -101,6 +101,47 @@
 				$row[0], $row[1], $row[2], $row[3]);
 			}
 		}
+		
+		$query_reviews = sprintf("SELECT name, time, rating, comment
+								FROM Review	WHERE mid = %d",
+			$_GET["mid"]);
+		$query_avgscore = sprintf("SELECT AVG(rating) FROM Review
+									WHERE mid = %d",
+			$_GET["mid"]);
+		$query_reviewcount = sprintf("SELECT count(rating) FROM Review
+										WHERE mid = %d",
+			$_GET["mid"]);
+					
+		$result_reviews = mysql_query($query_reviews, $connection);
+		$result_avgscore = mysql_query($query_avgscore, $connection);
+		$result_reviewcount = mysql_query($query_reviewcount, $connection);
+		
+		print "<br/>";
+		$reviewcount = 0;
+		if($result_reviewcount)
+			$reviewcount = mysql_fetch_row($result_reviewcount);
+		
+		if($reviewcount[0] == 0) {
+			print "No users have rated this movie.<br/>";
+		}
+		else {
+			print "User Reviews<br/>";
+			if($result_avgscore)
+			{
+				$row = mysql_fetch_row($result_avgscore);
+				printf("Users have given this movie an average rating of %d/5<br/>", 
+					$row[0]);
+			}
+			if($result_reviews) {
+				while($row = mysql_fetch_row($result_reviews)) {
+					printf("On %s, %s gave a rating of %d with the comment:\n%s", 
+					$row[1], $row[0], $row[2], $row[3]);
+				}
+			}
+		}
+		
+		printf("<a href=\"./addReview.php?mid=%d\">Comment on this movie!</a><br/>",
+			$_GET["mid"]);
 	}
 
 	mysql_close($connection);
