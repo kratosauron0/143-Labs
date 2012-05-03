@@ -52,18 +52,18 @@ Role: <input type="text" name="role" maxlength="50"><br/>
 <?php
 	if($connection && $_GET["mid"] && $_GET["aid"] && $_GET["role"]) {
 		$insert_movieactor = sprintf("INSERT INTO MovieActor
-						Values(%d, %d, %s)",
-						mysql_real_escape_string($_GET["mid"]), 
-						mysql_real_escape_string($_GET["did"]),
+						Values(%d, %d, '%s')", 
+						mysql_real_escape_string($_GET["mid"]),
+						mysql_real_escape_string($_GET["aid"]),
 						mysql_real_escape_string($_GET["role"]));
 		
 		
 		print "<hr/>\n";
-		$results_insert = mysql_query($insert_moviedirector);
+		$results_insert = mysql_query($insert_movieactor);
 		if($results_insert)
 			print "Add Success!<br/>\n";
 		else
-			printf("%s failed", $insert_moviedirector);
+			printf("%s failed", $insert_movieactor);
 	}
 	
 	mysql_close($connection);
