@@ -23,7 +23,7 @@ Movie: <select name="mid">
 		$result_movies = mysql_query($query_movies, $connection);
 		if($result_movies) {
 			while($row = mysql_fetch_row($result_movies)) {
-				printf( "<option value=\"%s\">%s</option>",
+				printf( "<option value=\"%s\">%s</option>\n",
 					$row[0], $row[1]);
 			}
 		}
@@ -38,7 +38,7 @@ Director: <select name="did">
 		$result_directors = mysql_query($query_directors, $connection);
 		if($result_directors) {
 			while($row = mysql_fetch_row($result_directors)) {
-				printf( "<option value =\"%s\">%s %s</option>",
+				printf( "<option value =\"%s\">%s %s</option>\n",
 					$row[0], $row[1], $row[2]);
 			}
 		}
@@ -59,7 +59,7 @@ Director: <select name="did">
 		print "<hr/>\n";
 		$results_insert = mysql_query($insert_moviedirector);
 		if($results_insert)
-			print "Add Success!";
+			print "Add Success!<br/>\n";
 		else
 			printf("%s failed", $insert_moviedirector);
 	}

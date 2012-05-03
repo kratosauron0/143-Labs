@@ -64,19 +64,55 @@
 	# If the user has just inserted a new movie
 	if($connection && $_GET["title"] && $_GET["year"] 
 		&& $_GET["mpaarating"] && $_GET["company"]) {
+		
+		$query_id = "SELECT id FROM MaxMovieID";
+		
+		$result_id = mysql_query($query_id, $connection);
+		$id_a = mysql_fetch_row($result_id);
+		$new_id = $id_a[0] + 1;
+		
 		# Craft the query using user input
 		# Checking? year should be number?
-		$query = sprintf("INSERT INTO Movie 
-				Values(,'%s', %d, '%s', '%s')",
+		$query_insert = sprintf("INSERT INTO Movie 
+				Values(%d,'%s', %d, '%s', '%s')",
+				$new_id,
 				mysql_real_escape_string($_GET["title"]), 
 				intval($_GET["year"]), 
 				mysql_real_escape_string($_GET["mpaarating"]),
 				mysql_real_escape_string($_GET["company"]));
 				
-		# For testing, simply print the query to see
-		print $query."</br>";
+		$query_update_id = sprintf("UPDATE MaxMovieID SET id = %d", $new_id);
+		$query_director_movie = sprintf("INSERT INTO MovieDirector
+								Values(%d, %d)",
+				$new_id, mysql_real_escape_string($_GET["did"]));
+		
 		
 		# Execute the query and notify user of results
+		print "<hr/>\n";
+		if(mysql_query($query_insert, $connection)) {
+			print "Insert success!<br/>\n";
+			if(!mysql_query($query_update_id))
+				print "ID update fail<br/>\n";
+			if(!mysql_query($query_director_movie))
+				print "Director insert failed<br/>\n";
+			
+			foreach($genres as $genre) {
+				$genre_field = "genre_".$genre;
+				if(isset($_GET[$genre_field])) {
+					$query_movie_genre = sprintf("INSERT INTO MovieGenre
+										Values(%d, '%s')",
+						$new_id, $genre);
+					if(mysql_query($query_movie_genre))
+						print "Genre ".$genre." added<br/>\n";
+					else
+						print $query_movie_genre."<br/>\n";
+				}
+			}
+		}
+		else {
+			print "Insert failed.".$query_insert;
+		}
+		
 	}
 	mysql_close($connection);
 ?>
