@@ -126,7 +126,7 @@
 			print "No users have rated this movie.<br/>";
 		}
 		else {
-			print "User Reviews<br/>\n";
+			print "<h2>User Reviews</h2>";
 			if($result_avgscore)
 			{
 				$row = mysql_fetch_row($result_avgscore);
@@ -135,8 +135,9 @@
 			}
 			if($result_reviews) {
 				while($row = mysql_fetch_row($result_reviews)) {
-					printf("On %s, %s gave a rating of %d with the comment:\n%s", 
+					printf("On %s, %s gave a rating of %d with the comment:<br />%s", 
 					$row[1], $row[0], $row[2], $row[3]);
+					echo "<br /><br />";
 				}
 			}
 		}
