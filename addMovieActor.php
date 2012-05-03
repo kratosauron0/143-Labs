@@ -61,7 +61,7 @@ Role: <input type="text" name="role" maxlength="50"><br/>
 		print "<hr/>\n";
 		$results_insert = mysql_query($insert_moviedirector);
 		if($results_insert)
-			print "Add Success!";
+			print "Add Success!<br/>\n";
 		else
 			printf("%s failed", $insert_moviedirector);
 	}

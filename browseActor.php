@@ -61,9 +61,7 @@
 				else if($row[$col] == "")
 					$row[$col] = "Unknown";
 			}
-			printf("Name: %s %s<br/>
-				Sex: %s<br/>
-				Date of Birth: %s<br/>
+			printf("Name: %s %s<br/>\nSex: %s<br/>\nDate of Birth: %s<br/>
 				Date of Death: %s<br/>",
 				$row[2], $row[1], $row[3], $row[4], $row[5]);
 		}
@@ -72,7 +70,7 @@
 		print "Movies Acted In:<br/>";
 		if($result_movies) {
 			while($row = mysql_fetch_row($result_movies)) {
-				printf("Played %s in <a href=\"./browseMovie?mid=%d\">%s(%s)</a><br/>", 
+				printf("Played %s in <a href=\"./browseMovie?mid=%d\">%s(%s)</a><br/>\n", 
 				$row[0], $row[1], $row[2], $row[3]);
 			}
 		}
