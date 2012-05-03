@@ -30,7 +30,7 @@
 			while($row = mysql_fetch_row($result)) {
 				if($row[1] == "" && $row[2] == "")
 					$row[1] = $row[0];
-				printf( "<option value =\"%s\">%s %s</option>",
+				printf( "<option value =\"%s\">%s %s</option>\n",
 					$row[0],
 					$row[1],
 					$row[2]);
@@ -62,13 +62,16 @@
 </form>
 <?php
 	# If the user has just inserted a new movie
-	if($connection && $_GET["title"]) {
+	if($connection && $_GET["title"] && $_GET["year"] 
+		&& $_GET["mpaarating"] && $_GET["company"]) {
 		# Craft the query using user input
 		# Checking? year should be number?
 		$query = sprintf("INSERT INTO Movie 
 				Values(,'%s', %d, '%s', '%s')",
-				$_GET["title"], intval($_GET["year"]), 
-				$_GET["mpaarating"],$_GET["company"]);
+				mysql_real_escape_string($_GET["title"]), 
+				intval($_GET["year"]), 
+				mysql_real_escape_string($_GET["mpaarating"]),
+				mysql_real_escape_string($_GET["company"]));
 				
 		# For testing, simply print the query to see
 		print $query."</br>";

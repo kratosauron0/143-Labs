@@ -1,4 +1,5 @@
 <html>
+<head> <title>Browse Movies</title> </head>
 <body>
 <?php
 	# Setup the database connection
@@ -29,11 +30,11 @@
 				# If the user already selected one, is viewing that info
 				# then it will be the selected one on the menu
 				if($_GET["mid"] && $_GET["mid"] == $row[0])
-					printf( "<option value=\"%s\" SELECTED>%s</option>",
+					printf( "<option value=\"%s\" SELECTED>%s</option>\n",
 						$row[0], $row[1]);
 				# Otherwise it's not the one the user chose
 				else
-					printf( "<option value=\"%s\">%s</option>",
+					printf( "<option value=\"%s\">%s</option>\n",
 						$row[0], $row[1]);
 			}
 		}
@@ -68,10 +69,7 @@
 				$field = mysql_fetch_field($result, $col);
 				if ($field) 
 				{
-					if($row[$col] != "")
-						printf("%s: ".$row[$col]."<br/>", $field->name);	
-					else
-						printf("%s: "."N/A"."<br/>", $field->name);	
+					printf("%s: ".$row[$col]."<br/>\n", $field->name);	
 				}
 			}
 		}
@@ -80,8 +78,11 @@
 		if($result_director) {
 			if($row = mysql_fetch_row($result_director))
 				printf("%s %s", $row[0], $row[1]);
+			while($row = mysql_fetch_row($result_director)) {
+				printf(", %s %s", $row[0], $row[1]);
+			}
 		}
-		print "<br/>";
+		print "<br/>\n";
 		
 		print "Genre: ";
 		if($result_genre) {
@@ -91,13 +92,13 @@
 				printf(", %s", $row[0]);
 			}
 		}
-		print "<br/>";
+		print "<br/>\n";
 		
-		print "<br/>";
-		print "Actors in this Movie<br/>";
+		print "<br/>\n";
+		print "Actors in this Movie<br/>\n";
 		if($result_actors) {
 			while($row = mysql_fetch_row($result_actors)) {
-				printf("<a href=\"./browseActor?aid=%d\">%s %s</a> as \"%s\"<br/>", 
+				printf("<a href=\"./browseActor?aid=%d\">%s %s</a> as \"%s\"<br/>\n", 
 				$row[0], $row[1], $row[2], $row[3]);
 			}
 		}
@@ -116,7 +117,7 @@
 		$result_avgscore = mysql_query($query_avgscore, $connection);
 		$result_reviewcount = mysql_query($query_reviewcount, $connection);
 		
-		print "<br/>";
+		print "<br/>\n";
 		$reviewcount = 0;
 		if($result_reviewcount)
 			$reviewcount = mysql_fetch_row($result_reviewcount);
@@ -125,11 +126,11 @@
 			print "No users have rated this movie.<br/>";
 		}
 		else {
-			print "User Reviews<br/>";
+			print "User Reviews<br/>\n";
 			if($result_avgscore)
 			{
 				$row = mysql_fetch_row($result_avgscore);
-				printf("Users have given this movie an average rating of %d/5<br/>", 
+				printf("Users have given this movie an average rating of %d/5<br/>\n", 
 					$row[0]);
 			}
 			if($result_reviews) {

@@ -1,4 +1,5 @@
 <html>
+<head> <title>Browse Actors</title> </head>
 <body>
 <?php
 	$connection = mysql_connect("localhost", "cs143", "");
@@ -26,10 +27,10 @@
 					$row[1] = $row[0];
 					
 				if($_GET["aid"] && $_GET["aid"] == $row[0])
-					printf( "<option value =\"%s\" SELECTED>%s %s</option>",
+					printf( "<option value =\"%s\" SELECTED>%s %s</option>\n",
 						$row[0], $row[1], $row[2]);
 				else
-					printf( "<option value =\"%s\">%s %s</option>",
+					printf( "<option value =\"%s\">%s %s</option>\n",
 						$row[0], $row[1], $row[2]);
 			}
 		}
