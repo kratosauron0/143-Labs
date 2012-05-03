@@ -29,17 +29,59 @@
 	}
 	
 	# Perform search on Actors
-	$query = "SELECT first, last FROM Actor";
+	$query = "SELECT first, last, dob, id FROM Actor WHERE ";
+	
+	$token1 = strtok($keyword, " ");
+	$token2 = strtok(" ");
+	if(!$token1)
+	{
+		# Quick Fix; easy way to kill the query
+		$query .= "id = 999999999";
+	}
+	else if(!$token2)
+	{
+		$query .= "first LIKE '%".$token1."%' OR last LIKE '%".$token1."%'";
+	}
+	else
+	{
+		$k = 0;
+		do{
+			$query .= "(first LIKE '%".$token1."%' OR last LIKE '%".$token1."%') AND ";
+			$token1 = $token2;
+			$k += 1;
+		}while($token2 = strtok(" "));
+		$query .= "(first LIKE '%".$token1."%' OR last LIKE '%".$token1."%')";
+	}
+		
 	$result = mysql_query($query, $connection);
 	$row = mysql_fetch_row($result);
 		
 	# Print out actor info
-	echo "<i>Support for searching for actors not implemented</i> <br />";
-	
-	echo "<br />";
-	
+	echo "<i>Searching for Actors</i> <br />";
+	if(!$row)
+	{
+		echo "No results found<br />";
+	}
+	else
+	{
+		echo "<blockquote>";
+		do{
+			printf("<a href=\"./browseActor?aid=%d\">", $row[3]);
+			echo $row[0]." ".$row[1]." (".$row[2].") </a><br />";
+		}while($row = mysql_fetch_row($result));
+		echo "</blockquote>";
+	}
+		
 	# Perform search on Movies
-	$query = "SELECT title, year, id FROM Movie WHERE title LIKE '%".$keyword."%'";
+	$query = "SELECT title, year, id FROM Movie WHERE ";
+	if(!$keyword)
+	{
+		$query .= "id = 9999999999999";
+	}
+	else
+	{
+		$query .= "title LIKE '%".$keyword."%' ORDER BY title";
+	}
 	$result = mysql_query($query, $connection);
 	$row = mysql_fetch_row($result);
 	
