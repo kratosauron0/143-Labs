@@ -65,13 +65,9 @@
 		
 		if($result) {
 			$row = mysql_fetch_row($result);
-			for($col=0; $col < mysql_num_fields($result); $col++) {
-				$field = mysql_fetch_field($result, $col);
-				if ($field) 
-				{
-					printf("%s: ".$row[$col]."<br/>\n", $field->name);	
-				}
-			}
+			printf("<br/>Title: %s(%s)<br/>\n", $row[1], $row[2]);
+			printf("Producer: %s<br/>\n", $row[4]);
+			printf("MPAA Rating: %s<br/>\n", $row[3]);
 		}
 		
 		print "Director: ";
