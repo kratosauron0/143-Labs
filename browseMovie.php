@@ -12,6 +12,7 @@
 		mysql_select_db("CS143", $connection);
 ?>
 
+<h2>Browse Movies</h2>
 <b>Choose Movie:</b><br/>
 <form method="GET">
 <select name="mid">
@@ -40,7 +41,7 @@
 		}
 	}
 ?>
-</select><br/>
+</select>
 <input type="submit" value="Go">
 </form>
 
@@ -91,12 +92,17 @@
 		print "<br/>\n";
 		
 		print "<br/>\n";
-		print "Actors in this Movie<br/>\n";
-		if($result_actors) {
+		print "Actors in this Movie:<br/>\n";
+		if($result_actors) 
+		{
 			while($row = mysql_fetch_row($result_actors)) {
 				printf("<a href=\"./browseActor?aid=%d\">%s %s</a> as \"%s\"<br/>\n", 
 				$row[0], $row[1], $row[2], $row[3]);
 			}
+		}
+		else
+		{
+			echo "<i>No Actors Found</i><br />\n";
 		}
 		
 		$query_reviews = sprintf("SELECT name, time, rating, comment

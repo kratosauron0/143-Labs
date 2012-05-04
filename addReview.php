@@ -74,21 +74,12 @@
 	$mid = $_GET[mid];
 	$rating = $_GET[rating];
 	$comment = 	mysql_real_escape_string($_GET[comment], $connection);
-
-	# DEBUG
-	echo "<i>Name</i>: ".$name."<br />";
-	echo "<i>Time</i>: ".$time."<br />";
-	echo "<i>Movie ID</i>: ".$mid."<br />";
-	echo "<i>Rating</i>: ".$rating."<br />";
-	echo "<i>Comment</i>: <br />".$comment."<br />";
 	
 	# Insert Review into Table
 	if( $name != "")
 	{
 		$format = "INSERT INTO Review VALUES ('%s', %f, %d, %d, '%s')";
 		$query = sprintf($format, $name, $time, $mid, $rating, $comment);
-		echo "<br />Query: <br />".$query."<br />";
-		echo "<br />";
 		
 		if($result = mysql_query($query, $connection))
 		{
@@ -98,7 +89,6 @@
 		{
 			echo "<i>There was a problem in submitting your review.<br />";
 		}
-		echo "Please do not refresh the page</i><br />";
 	}
 	
 	mysql_close($connection);

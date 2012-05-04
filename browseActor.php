@@ -11,6 +11,7 @@
 		mysql_select_db("CS143", $connection);
 ?>
 
+<h2>Browse Actors</h2>
 <b>Choose Actor:</b><br/>
 <form method="GET">
 <select name="aid">
@@ -36,7 +37,7 @@
 		}
 	}
 ?>
-</select><br/>
+</select>
 <input type="submit" value="Go">
 </form>
 

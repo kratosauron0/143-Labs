@@ -11,7 +11,7 @@
 		mysql_select_db("CS143", $connection);
 ?>
 
-<b>Add New Director to a Movie:</b><br/>
+<h2>Add New Director to a Movie:</h2>
 <form method="GET">
 Movie: <select name="mid">
 <?php
@@ -59,7 +59,7 @@ Director: <select name="did">
 		print "<hr/>\n";
 		$results_insert = mysql_query($insert_moviedirector);
 		if($results_insert)
-			print "Add Success!<br/>\n";
+			print "Successfully linked director to movie!<br/>\n";
 		else
 			printf("%s failed", $insert_moviedirector);
 	}

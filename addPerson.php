@@ -12,7 +12,7 @@
 		mysql_select_db("CS143", $connection);
 ?>
 
-<b>Add New Actor/Director:</b>
+<h2>Add A New Actor/Director</h2>
 <form method="GET">
   Identity: <input type="radio" name="identity" value="Actor" checked="true">Actor
 			<input type="radio" name="identity" value="Director">Director<br/>
@@ -20,8 +20,9 @@
   Last Name: <input type="text" name="last" maxlength="20"><br/>
   Sex: <input type="radio" name="sex" value="Male" checked="true">Male
 		<input type="radio" name="sex" value="Female">Female<br/>
-  Date of Birth: <input type="text" name="dob"><br/>
-  Date of Death: <input type="text" name="dod"> (Leave blank if not dead)<br/>
+  <i>NOTE: Format dates as YYYYMMDD</i><br />
+  Date of Birth: <input type="text" name="dob"> <br/>
+  Date of Death: <input type="text" name="dod"> (<i>Leave blank if not dead</i>)<br/>
   <input type="submit" value="Add!"/><br/>
 </form>
 <?php
@@ -61,8 +62,13 @@
 		
 		# Execute the query and notify user of results
 		print "<hr/>\n";
-		if(mysql_query($query_insert, $connection)) {
-			print "Insert success!<br/>\n";
+		if(mysql_query($query_insert, $connection)) 
+		{
+			if($_GET["identity"] == "Actor")
+				print "Successfully added new actor!<br/>\n";
+			else
+				print "Successfully added new director!<br/>\n";
+			
 			if(!mysql_query($query_update_id))
 				print "ID update fail<br/>\n";
 		}

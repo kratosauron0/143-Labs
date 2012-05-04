@@ -12,7 +12,7 @@
 		mysql_select_db("CS143", $connection);
 ?>
 
-<b>Add New Movie:</b>
+<h2>Add A New Movie</h2>
 <form method="GET">
   Title: <input type="text" name="title" maxlength="100"><br/>
   Company: <input type="text" name="company" maxlength="50"><br/>
@@ -52,9 +52,21 @@
   $genres = array("Action", "Adult", "Adventure", "Animation", "Comedy", "Crime",
 			"Documentary", "Drama", "Family", "Fantasy", "Horror", "Musical",
 			"Mystery", "Romance", "Sci-Fi", "Short", "Thriller", "War");
-	foreach($genres as $genre) {
-	printf("<input type=\"checkbox\" name=\"genre_%s\" value=\"%s\">%s</input>", 
-		$genre, $genre, $genre);
+	$k = 0;
+	
+	foreach($genres as $genre) 
+	{
+		if($k % 5 == 4)
+		{
+			printf("<input type=\"checkbox\" name=\"genre_%s\" value=\"%s\">%s   </input><br />", 
+					$genre, $genre, $genre);
+		}
+		else
+		{
+			printf("<input type=\"checkbox\" name=\"genre_%s\" value=\"%s\">%s   </input>", 
+					$genre, $genre, $genre);
+		}
+		$k++;
 	}
   ?>
   <br/>
@@ -90,7 +102,7 @@
 		# Execute the query and notify user of results
 		print "<hr/>\n";
 		if(mysql_query($query_insert, $connection)) {
-			print "Insert success!<br/>\n";
+			print "Successfully added a new movie!<br/>\n";
 			if(!mysql_query($query_update_id))
 				print "ID update fail<br/>\n";
 			if(!mysql_query($query_director_movie))
@@ -103,9 +115,9 @@
 										Values(%d, '%s')",
 						$new_id, $genre);
 					if(mysql_query($query_movie_genre))
-						print "Genre ".$genre." added<br/>\n";
+						print "Added Genre: ".$genre."<br/>";
 					else
-						print $query_movie_genre."<br/>\n";
+						print $query_movie_genre."<br/>";
 				}
 			}
 		}
