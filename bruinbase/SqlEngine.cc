@@ -128,9 +128,63 @@ RC SqlEngine::select(int attr, const string& table, const vector<SelCond>& cond)
   return rc;
 }
 
+
+// CS 143 Project 2
+// Part A
+// Implement the load() function to create a table from the filename
+// Assumptions:
+//		- Only use well-formed load files
+// Methods:
+//		- parseLoadLine(line, key, value)
+//			takes a line from the load file, and returns it 
+//			as a key-value pair
+//		- fstream, fgets, etc.
+//			use to read in data from the given file
+//		- RecordFile class
+//			method for storing BruinBase tables
 RC SqlEngine::load(const string& table, const string& loadfile, bool index)
 {
-  /* your code here */
+	
+	
+	// Open the table in write mode
+	string table_name = table + ".tbl";		// Table file name
+	RecordFile newTable;
+	newTable.open(table_name, 'w');			// Open the table
+	
+	// Open the file for reading
+	ifstream table_file;
+	table_file.open(loadfile.c_str());		// Open the input file and check
+	if(table_file.is_open())
+	{
+		
+		// Prepare variables for reading
+		// TODO: Implement loading files with indexing (Later?)
+		SqlEngine parser;		// Parser
+		string	table_line;		// Line in the table
+		int		entry_key;		// Line's key
+		string	entry_val;		// Line's value
+		RecordId entry_id;		// Record ID
+		
+		// For all the lines in the file...
+		while(table_file.good())
+		{
+			// Acquire and parse a line
+			getline(table_file, table_line);
+			if(parser.parseLoadLine(table_line, entry_key, entry_val) == 0)
+			{
+				// Store the line in the table
+				newTable.append(entry_key, entry_val, entry_id);
+				
+				// Increment the record ID
+				entry_id++;
+			}
+		}
+	}
+	// Close the file
+	table_file.close();
+	
+	// Close the table
+	newTable.close();
 
   return 0;
 }
