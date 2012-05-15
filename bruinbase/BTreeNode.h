@@ -18,6 +18,12 @@
  */
 class BTLeafNode {
   public:
+    // Total bytes - bytes for next node and keyCount = free bytes for record key pairs
+    static const int MAX_KEYS = 
+      (PageFile::PAGE_SIZE - (sizeof(int) + sizeof(PageId))) / (sizeof(int) + sizeof(RecordId));
+  
+    BTLeafNode();
+    
    /**
     * Insert the (key, rid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
@@ -102,6 +108,7 @@ class BTLeafNode {
     * that contains the node.
     */
     char buffer[PageFile::PAGE_SIZE];
+    int keyCount; ///  The number of keys in the node.
 }; 
 
 
@@ -110,6 +117,12 @@ class BTLeafNode {
  */
 class BTNonLeafNode {
   public:
+
+  static const int MAX_KEYS = 
+      (PageFile::PAGE_SIZE - (sizeof(int) + sizeof(PageId))) / (sizeof(int) + sizeof(PageId));
+      
+    BTNonLeafNode();
+  
    /**
     * Insert a (key, pid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
@@ -180,6 +193,8 @@ class BTNonLeafNode {
     * that contains the node.
     */
     char buffer[PageFile::PAGE_SIZE];
+    int keyCount; ///  The number of keys in the node.
+
 }; 
 
 #endif /* BTNODE_H */
